@@ -5,23 +5,36 @@
 #include "globals.h"
 #include "win.h"
 #include "tile.h"
+#include "bot.h"
 
 Tile board[9];
+void initBoard()
+{
+  for (size_t i = 0; i < 9; i++)
+  {
+    board[i] = EMPTY;
+  }
+}
+
 int player = X;
 int turn = X;
 
 void nextTurn()
 {
   // check winner
-  isWin(board, turn);
+  Tile winningPlayer = winner(board);
+  if (winningPlayer != EMPTY)
+  {
+    return;
+  }
 
   if (turn == O)
     turn = X;
   else
     turn = O;
 
-  // TODO implement bot
-  // if (turn != player) botPlay();
+  if (turn != player)
+    botPlay(board, turn);
 }
 
 // returns -1 if x or y is out of board bounds
@@ -52,7 +65,7 @@ void clickedCell()
   if (i < 0)
     return;
 
-  if (turn == player)
+  if (turn == player && board[i] == EMPTY)
   {
     board[i] = player;
     nextTurn();
@@ -100,7 +113,7 @@ void drawPiece(int i, Tile type, SDL_Renderer *renderer)
   int y = i / 3;
   int x = i - y * 3;
 
-  if (type == O)
+  if (type == X)
   {
     // tl to br
     int lStartX = SCREEN_PADDING + (CELL_SIZE + LINE_THICKNESS) * x + CELL_PADDING;

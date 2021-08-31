@@ -3,8 +3,8 @@
 
 typedef enum
 {
+  X = -1,
   EMPTY,
-  X,
   O,
 } Tile;
 

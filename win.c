@@ -1,35 +1,16 @@
 #include <stdlib.h>
-#include <stdbool.h>
 #include "tile.h"
 
-const bool winningPatterns[8][9] = {
-    {[0] = true, [1] = true, [2] = true},
-    {[3] = true, [4] = true, [5] = true},
-    {[6] = true, [7] = true, [8] = true},
-    {[0] = true, [3] = true, [6] = true},
-    {[1] = true, [4] = true, [7] = true},
-    {[2] = true, [5] = true, [8] = true},
-    {[0] = true, [4] = true, [8] = true},
-    {[2] = true, [4] = true, [6] = true},
-};
+const unsigned wins[8][3] = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
-bool isWin(Tile board[9], Tile player)
+// returns player who has won or 0
+Tile winner(Tile board[9])
 {
   for (size_t i = 0; i < 8; i++)
   {
-    int matches = 0;
-
-    for (size_t j = 0; j < 9; j++)
-    {
-      if (board[j] == player && winningPatterns[j])
-      {
-        matches++;
-      }
-    }
-
-    if (matches == 3)
-      return true;
+    if (board[wins[i][0]] != EMPTY && board[wins[i][0]] == board[wins[i][1]] && board[wins[i][1]] == board[wins[i][2]])
+      return board[wins[i][0]];
   }
 
-  return false;
+  return EMPTY;
 }

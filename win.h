@@ -4,6 +4,6 @@
 #include <stdbool.h>
 #include "tile.h"
 
-bool isWin(Tile board[9], Tile player);
+Tile winner(Tile board[9]);
 
 #endif

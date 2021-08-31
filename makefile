@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.c board.c win.c
+OBJS = main.c board.c win.c bot.c
 
 #CC specifies which compiler we're using
 CC = clang

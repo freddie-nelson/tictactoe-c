@@ -79,6 +79,8 @@ int main()
     }
   }
 
+  initBoard();
+
   // game loop
   SDL_Event e;
 
