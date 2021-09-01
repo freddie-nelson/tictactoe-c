@@ -68,12 +68,23 @@ int main()
     if (window == NULL)
     {
       printf("Window could not be created! SDL_ERROR: %s\n", SDL_GetError());
+      return 0;
+    }
+
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    if (renderer == NULL)
+    {
+      printf("renderer SDL_ERROR: %s\n", SDL_GetError());
     }
     else
     {
       // get window surface
       screenSurface = SDL_GetWindowSurface(window);
-      renderer = SDL_GetRenderer(window);
+      if (screenSurface == NULL)
+      {
+        printf("screenSurface SDL_ERROR: %s\n", SDL_GetError());
+        return 0;
+      }
 
       quit = false;
     }
@@ -108,6 +119,7 @@ int main()
     drawBoard(window, renderer);
 
     SDL_RenderPresent(renderer);
+    SDL_Delay(0);
   }
 
   SDL_DestroyWindow(window);
